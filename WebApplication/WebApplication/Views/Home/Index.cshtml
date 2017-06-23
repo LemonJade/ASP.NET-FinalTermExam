@@ -1,29 +1,33 @@
 ﻿@{
     ViewBag.Title = "1103137114";
 }
+<script>
+    function doSearch() {
 
+    }
+</script>
 <body>
     客戶資料查詢
     <table>
         <tr>
             <td>客戶編號</td>
-            <td><input type="text" /></td>
+            <td><input type="text" id="cId"/></td>
         </tr>
         <tr>
             <td>客戶名稱</td>
-            <td><input type="text" /></td>
+            <td><input type="text" id="cName"/></td>
         </tr>
         <tr>
             <td>聯絡人姓名</td>
-            <td><input type="text" /></td>
+            <td><input type="text" id="contactName"/></td>
         </tr>
         <tr>
             <td>聯絡人職稱</td>
-            <td><input type="text" /></td>
+            <td><input type="text" id="contactTitle"/></td>
         </tr>
         <tr>
             <td></td>
-            <td><button id="searchBtn">查詢</button><button id="deleteBtn">刪除</button><button id="createBtn">新增客戶</button></td>
+            <td><button id="searchBtn" onclick="doSearch()">查詢</button><button id="deleteBtn">刪除</button><button id="createBtn">新增客戶</button></td>
         </tr>
     </table>
 </body>
