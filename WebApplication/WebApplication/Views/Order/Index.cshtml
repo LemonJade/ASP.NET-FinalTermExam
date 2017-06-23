@@ -1,13 +1,47 @@
-﻿@{
+﻿@model WebApplication.Models.Model1
+@{
     ViewBag.Title = "1103137114";
+
 }
 
 <script>
-    $(document).ready(function () {
+    function sendSerch() {
+        var data = {
+            "sc.CustomerID": parseInt($('#cId').val()),
+        };
+        console.log("送出的查詢條件");
+        console.log(data);
+        $.post("search", data, function (res) {
+            showResult(res);
+        }, "json");
+    }
+    function showResult(data) {
+        $("#result").empty();
+        var result = "";
+        if (data.length == 0) {
+            $("#result").append("查無相關資料");
+            return;
+        }
+        else {
+            result += "查詢完畢 共" + data.length + "筆";
+        }
 
-    });
-    function doSearch() {
-        
+        var colName = Object.getOwnPropertyNames(data[0]);
+        result += "<table><tr>";
+        $.each(colName, function (i, value) {
+            result += "<th>" + value + "</th>";
+        });
+        result += "<th>操作</th>";
+        result += "</tr>";
+        $.each(data, function (i, value1) {
+            result += "<tr>";
+            $.each(value1, function (j, value2) {
+                result += "<td>" + value2 + "</td>";
+            });
+            result += "<td><button class=\"ui-button ui-widget ui-corner-all\">修改</button><button class=\"ui-button ui-widget ui-corner-all\">刪除</button></td>";
+            result += "</tr>";
+        });
+        $("#result").append(result);
     }
 </script>
 
@@ -16,23 +50,24 @@
     <table>
         <tr>
             <td>客戶編號</td>
-            <td><input type="text" /></td>
+            <td><input type="text" id="cId"/></td>
         </tr>
         <tr>
             <td>客戶名稱</td>
-            <td><input type="text" /></td>
+            <td><input type="text" id="cName"/></td>
         </tr>
         <tr>
             <td>聯絡人姓名</td>
-            <td><input type="text" /></td>
+            <td><input type="text" id="contactName"/></td>
         </tr>
         <tr>
             <td>聯絡人職稱</td>
-            <td><input type="text" /></td>
+            <td><input type="text" id="contactTitle"/></td>
         </tr>
         <tr>
             <td></td>
-            <td><button id="searchBtn" onclick="doSearch()">查詢</button><button id="cleanBtn">清除</button><button id="createBtn">新增客戶</button></td>
+            <td><button id="searchBtn" onclick="sendSerch()">查詢</button><button id="cleanBtn">清除</button><button id="createBtn">新增客戶</button></td>
         </tr>
     </table>
+    <div id="result"></div>
 </body>
